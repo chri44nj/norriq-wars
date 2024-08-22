@@ -1,0 +1,94 @@
+/**** GLOBAL ****/
+@font-face {
+  font-family: "star-jedi";
+  src: url("./fonts/starjedi.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "star-jedi-outlined";
+  src: url("./fonts/starjhol.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  /* Colors */
+  --bg-col: #ffffff;
+  --bg-col-alt: #f9f9f9;
+  --text-col: #232b2b;
+  --star-wars-yellow: #f7e03c;
+  --dark-side-red: #b71c1c;
+  --rebel-blue: #0d47a1;
+  --imperial-gray: #424242;
+  --light-gray: #e0e0e0;
+  --dark-gray: #616161;
+  --lightsaber-green: #4caf50;
+  --lightsaber-blue: #03a9f4;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+label,
+input,
+button,
+span {
+  overflow-wrap: break-word;
+  hyphens: auto;
+  color: var(--text-col);
+}
+
+p {
+  max-width: 60ch;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover,
+button:hover {
+  cursor: pointer;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/** SPECIFICS **/
