@@ -15,15 +15,14 @@
 
 :root {
   /* Colors */
-  --bg-col: #ffffff;
-  --bg-col-alt: #f9f9f9;
+  --bg-col: #f9f9f9;
   --text-col: #232b2b;
+  --light-gray: #e0e0e0;
+  --dark-gray: #616161;
   --star-wars-yellow: #f7e03c;
   --dark-side-red: #b71c1c;
   --rebel-blue: #0d47a1;
   --imperial-gray: #424242;
-  --light-gray: #e0e0e0;
-  --dark-gray: #616161;
   --lightsaber-green: #4caf50;
   --lightsaber-blue: #03a9f4;
 }
@@ -54,6 +53,8 @@ h6,
 p,
 a,
 label,
+select,
+option,
 input,
 button,
 span {

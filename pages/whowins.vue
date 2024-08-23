@@ -3,8 +3,6 @@
 </template>
 
 <script setup>
-import { useHead } from "#app";
-
 useHead({
   title: "Who wins?",
   meta: [{ name: "description", content: "The question every one has always wanted to know: who would win in a 1v1 fight to the death, Luke Skywalker or Darth Vader? With our state-of-the-art technology, you can now find out!" }],

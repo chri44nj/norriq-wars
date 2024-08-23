@@ -1,27 +1,63 @@
 <template>
-  <div class="flex h-dvh relative overflow-hidden">
-    <div v-if="forceButton.firstClick">
-      <div :class="['welcome-container justify-end left-0 z-20', forceButton.clicked ? 'slide-left' : '']">
-        <p class="welcome-text">Hello</p>
-      </div>
-      <div :class="['welcome-container justify-start right-0 z-20', forceButton.clicked ? 'slide-right' : '']">
-        <p class="welcome-text">There</p>
-      </div>
-      <div :class="['button-wrapper', forceButton.clicked ? 'vanish' : '']">
-        <button @click="forceButtonClicked" class="force-button">Use the force</button>
-      </div>
+  <div class="home-wrapper flex h-dvh relative overflow-hidden">
+    <WelcomeCurtain />
+    <div class="dropdown-wrapper">
+      <Dropdown :dropdownData="sortDropdownData" @change="filterSort" />
+      <Dropdown :dropdownData="genderDropdownData" @change="filterGender" />
+      <Dropdown :dropdownData="bornDropdownData" @change="filterBorn" />
+      <Dropdown :dropdownData="heightDropdownData" @change="filterHeight" />
     </div>
-    <section class="grid grid-cols-4 bg-red-500 w-full h-full pt-28">
-      <CharacterCard v-for="character in characterList" :key="character.url" :name="character.name" :height="character.height" :mass="character.mass" :hair_color="character.hair_color" :skin_color="character.skin_color" :eye_color="character.eye_color" :birth_year="character.birth_year" :gender="character.gender" :homeworld="character.homeworld" :films="character.films" :vehicles="character.vehicles" :starships="character.starships" />
+    <section class="character-grid">
+      <CharacterCard v-for="character in filteredCharacterList" :key="character.url" :characterData="character" />
     </section>
   </div>
 </template>
 
 <script setup>
+/* Imports */
+import { sortDropdownData, genderDropdownData, bornDropdownData, heightDropdownData } from "~/constants/dropdownData";
+import { parseBBY, matchBornRange, matchHeightRange } from "~/utils/filterUtils";
+
 /* Constants */
 const firstFetch = useState("firstFetch", () => true);
 const characterList = useState("characterList", () => []);
-const forceButton = useState("forceButton", () => ({ clicked: false, firstClick: true }));
+const selectedSort = ref("alphabetical");
+const selectedGender = ref("all");
+const selectedBorn = ref("all");
+const selectedHeight = ref("all");
+
+const filteredCharacterList = computed(() => {
+  let filteredList = characterList.value.filter((character) => {
+    const genderMatch = selectedGender.value === "all" || character.gender === selectedGender.value;
+    const bornMatch = selectedBorn.value === "all" || matchBornRange(character.birth_year, selectedBorn.value);
+    const heightMatch = selectedHeight.value === "all" || matchHeightRange(character.height, selectedHeight.value);
+
+    return genderMatch && bornMatch && heightMatch;
+  });
+
+  switch (selectedSort.value) {
+    case "alphabetical":
+      filteredList.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    case "reverse-alphabetical":
+      filteredList.sort((a, b) => b.name.localeCompare(a.name));
+      break;
+    case "age":
+      filteredList.sort((a, b) => parseBBY(b.birth_year) - parseBBY(a.birth_year));
+      break;
+    case "reverse-age":
+      filteredList.sort((a, b) => parseBBY(a.birth_year) - parseBBY(b.birth_year));
+      break;
+    case "height":
+      filteredList.sort((a, b) => parseFloat(a.height) - parseFloat(b.height));
+      break;
+    case "reverse-height":
+      filteredList.sort((a, b) => parseFloat(b.height) - parseFloat(a.height));
+      break;
+  }
+
+  return filteredList;
+});
 
 /* Functions */
 const fetchAllCharacters = async () => {
@@ -31,131 +67,60 @@ const fetchAllCharacters = async () => {
   while (apiUrl) {
     const { data: characterBatch } = await useFetch(apiUrl);
     charactersFetched = charactersFetched.concat(characterBatch.value.results);
+    characterList.value = charactersFetched;
+    console.log(characterList.value);
     apiUrl = characterBatch.value.next;
-    console.log("en batch:", characterBatch.value.results);
   }
 
   firstFetch.value = false;
-  characterList.value = charactersFetched;
-  console.log("done", characterList.value[0].name);
 };
 
 if (firstFetch.value) {
   fetchAllCharacters();
 }
 
-const forceButtonClicked = () => {
-  forceButton.value.clicked = true;
+const filterSort = (value) => {
+  selectedSort.value = value;
+  console.log("Sort applied:", value);
+};
 
-  setTimeout(() => {
-    forceButton.value.firstClick = false;
-  }, 2000);
+const filterGender = (value) => {
+  selectedGender.value = value;
+  console.log("Gender filter applied:", value);
+};
+
+const filterBorn = (value) => {
+  selectedBorn.value = value;
+  console.log("Born filter applied:", value);
+};
+
+const filterHeight = (value) => {
+  selectedHeight.value = value;
+  console.log("Height filter applied:", value);
 };
 </script>
 
 <style scoped>
-.welcome-container {
-  position: absolute;
+.home-wrapper {
+  background-color: var(--light-gray);
+}
+
+.dropdown-wrapper {
   display: flex;
-  align-items: center;
-  width: 50%;
-  height: 100%;
-  background-color: black;
+  flex-direction: column;
+  gap: 1rem;
   padding: 1rem;
+  padding-top: calc(100px + 1rem);
 }
 
-.welcome-text {
-  font-family: "star-jedi";
-  color: var(--star-wars-yellow);
-  font-size: 4rem;
-}
-
-.button-wrapper {
-  position: absolute;
-  bottom: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 30;
-  transition: visibility 1s, opacity 1s;
-}
-
-.force-button {
-  color: var(--bg-col);
-  font-weight: bold;
-  background-color: var(--imperial-gray);
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  transition: background-color 0.5s;
-  &:hover {
-    background-color: var(--rebel-blue);
-    animation: vibrate 0.5s linear infinite;
-  }
-}
-
-.vanish {
-  animation: fade-out 0.4s ease-in-out forwards;
-}
-
-.slide-left {
-  animation: slide-left 2s ease-in-out forwards;
-}
-
-.slide-right {
-  animation: slide-right 2s ease-in-out forwards;
-}
-
-/* Animations */
-
-@keyframes vibrate {
-  0% {
-    transform: translateX(0);
-    transform: rotate(1deg);
-  }
-  25% {
-    transform: translateX(-1px);
-    transform: rotate(-1deg);
-  }
-  50% {
-    transform: translateX(1px);
-    transform: rotate(1deg);
-  }
-  75% {
-    transform: translateX(-1px);
-    transform: rotate(-1deg);
-  }
-  100% {
-    transform: translateX(0);
-    transform: rotate(1deg);
-  }
-}
-
-@keyframes slide-left {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-@keyframes slide-right {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-    visibility: visible;
-  }
-  100% {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  grid-auto-rows: min-content;
+  padding: 1rem;
+  padding-top: calc(100px + 1rem);
+  gap: 1rem;
+  overflow: scroll;
+  width: 100dvw;
 }
 </style>

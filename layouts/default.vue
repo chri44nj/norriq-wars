@@ -17,7 +17,7 @@
 
 <style scoped>
 nav {
-  background-color: var(--imperial-gray);
+  background-color: var(--rebel-blue);
   height: 100px;
 }
 
