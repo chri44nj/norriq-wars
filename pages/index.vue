@@ -15,7 +15,7 @@
 
 <script setup>
 /* Imports */
-import { fetchAllCharacters } from "./api";
+import { fetchAllCharacters } from "/utils/api";
 import { sortDropdownData, genderDropdownData, bornDropdownData, heightDropdownData } from "/constants/dropdownData";
 import { parseBBY, matchBornRange, matchHeightRange } from "/utils/filterUtils";
 
