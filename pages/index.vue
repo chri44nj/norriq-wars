@@ -15,8 +15,9 @@
 
 <script setup>
 /* Imports */
-import { sortDropdownData, genderDropdownData, bornDropdownData, heightDropdownData } from "~/constants/dropdownData";
-import { parseBBY, matchBornRange, matchHeightRange } from "~/utils/filterUtils";
+import { fetchAllCharacters } from "./api";
+import { sortDropdownData, genderDropdownData, bornDropdownData, heightDropdownData } from "/constants/dropdownData";
+import { parseBBY, matchBornRange, matchHeightRange } from "/utils/filterUtils";
 
 /* Constants */
 const firstFetch = useState("firstFetch", () => true);
@@ -60,7 +61,7 @@ const filteredCharacterList = computed(() => {
 });
 
 /* Functions */
-const fetchAllCharacters = async () => {
+/* const fetchAllCharacters = async () => {
   let apiUrl = "https://swapi.dev/api/people";
   let charactersFetched = [];
 
@@ -73,7 +74,7 @@ const fetchAllCharacters = async () => {
   }
 
   firstFetch.value = false;
-};
+}; */
 
 if (firstFetch.value) {
   fetchAllCharacters();
