@@ -67,11 +67,11 @@ const fetchAllCharacters = async () => {
   let charactersFetched = [];
 
   while (apiUrl) {
-    const { data: characterBatch } = await useFetch(apiUrl);
-    charactersFetched = charactersFetched.concat(characterBatch.value.results);
+    const characterBatch = await $fetch(apiUrl);
+    charactersFetched = charactersFetched.concat(characterBatch.results);
     characterList.value = charactersFetched;
     console.log(characterList.value);
-    apiUrl = characterBatch.value.next;
+    apiUrl = characterBatch.next;
   }
 
   firstFetch.value = false;
