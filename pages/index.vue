@@ -15,7 +15,8 @@
 
 <script setup>
 /* Imports */
-import { fetchAllCharacters } from "/utils/api";
+/* import { fetchAllCharacters } from "/utils/api"; */
+
 import { sortDropdownData, genderDropdownData, bornDropdownData, heightDropdownData } from "/constants/dropdownData";
 import { parseBBY, matchBornRange, matchHeightRange } from "/utils/filterUtils";
 
@@ -44,10 +45,10 @@ const filteredCharacterList = computed(() => {
       filteredList.sort((a, b) => b.name.localeCompare(a.name));
       break;
     case "age":
-      filteredList.sort((a, b) => parseBBY(b.birth_year) - parseBBY(a.birth_year));
+      filteredList.sort((a, b) => parseBBY(b.birth_year, "age") - parseBBY(a.birth_year, "age"));
       break;
     case "reverse-age":
-      filteredList.sort((a, b) => parseBBY(a.birth_year) - parseBBY(b.birth_year));
+      filteredList.sort((a, b) => parseBBY(a.birth_year, "reverse-age") - parseBBY(b.birth_year, "reverse-age"));
       break;
     case "height":
       filteredList.sort((a, b) => parseFloat(a.height) - parseFloat(b.height));
@@ -61,7 +62,7 @@ const filteredCharacterList = computed(() => {
 });
 
 /* Functions */
-/* const fetchAllCharacters = async () => {
+const fetchAllCharacters = async () => {
   let apiUrl = "https://swapi.dev/api/people";
   let charactersFetched = [];
 
@@ -74,7 +75,7 @@ const filteredCharacterList = computed(() => {
   }
 
   firstFetch.value = false;
-}; */
+};
 
 if (firstFetch.value) {
   fetchAllCharacters();
