@@ -1,11 +1,13 @@
 <template>
-  <div class="home-wrapper flex h-dvh relative overflow-hidden">
+  <div class="home-wrapper">
     <WelcomeCurtain />
     <div class="dropdown-wrapper">
+      <input v-model="searchQuery" @input="handleSearch" placeholder="Search characters..." class="search-input" />
       <Dropdown :dropdownData="sortDropdownData" @change="filterSort" />
       <Dropdown :dropdownData="genderDropdownData" @change="filterGender" />
-      <Dropdown :dropdownData="bornDropdownData" @change="filterBorn" />
       <Dropdown :dropdownData="heightDropdownData" @change="filterHeight" />
+      <Dropdown :dropdownData="bornDropdownData" @change="filterBorn" />
+      <button @click="resetFilters" class="reset-button">Reset Filters</button>
     </div>
     <section class="character-grid">
       <CharacterCard v-for="character in filteredCharacterList" :key="character.url" :characterData="character" />
@@ -15,26 +17,24 @@
 
 <script setup>
 /* Imports */
-/* import { fetchAllCharacters } from "/utils/api"; */
-
 import { sortDropdownData, genderDropdownData, bornDropdownData, heightDropdownData } from "/constants/dropdownData";
+import { selectedSort, selectedGender, selectedBorn, selectedHeight } from "/constants/filterData";
 import { parseBBY, matchBornRange, matchHeightRange } from "/utils/filterUtils";
+import resetEventBus from "/utils/resetEventBus";
 
 /* Constants */
 const firstFetch = useState("firstFetch", () => true);
 const characterList = useState("characterList", () => []);
-const selectedSort = ref("alphabetical");
-const selectedGender = ref("all");
-const selectedBorn = ref("all");
-const selectedHeight = ref("all");
+const searchQuery = ref("");
+const isSearching = ref(false);
 
 const filteredCharacterList = computed(() => {
   let filteredList = characterList.value.filter((character) => {
     const genderMatch = selectedGender.value === "all" || character.gender === selectedGender.value;
     const bornMatch = selectedBorn.value === "all" || matchBornRange(character.birth_year, selectedBorn.value);
     const heightMatch = selectedHeight.value === "all" || matchHeightRange(character.height, selectedHeight.value);
-
-    return genderMatch && bornMatch && heightMatch;
+    const searchMatch = !isSearching.value || character.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+    return genderMatch && bornMatch && heightMatch && searchMatch;
   });
 
   switch (selectedSort.value) {
@@ -45,10 +45,10 @@ const filteredCharacterList = computed(() => {
       filteredList.sort((a, b) => b.name.localeCompare(a.name));
       break;
     case "age":
-      filteredList.sort((a, b) => parseBBY(b.birth_year, "age") - parseBBY(a.birth_year, "age"));
+      filteredList.sort((a, b) => parseBBY(a.birth_year, "age") - parseBBY(b.birth_year, "age"));
       break;
     case "reverse-age":
-      filteredList.sort((a, b) => parseBBY(a.birth_year, "reverse-age") - parseBBY(b.birth_year, "reverse-age"));
+      filteredList.sort((a, b) => parseBBY(b.birth_year, "reverse-age") - parseBBY(a.birth_year, "reverse-age"));
       break;
     case "height":
       filteredList.sort((a, b) => parseFloat(a.height) - parseFloat(b.height));
@@ -63,23 +63,55 @@ const filteredCharacterList = computed(() => {
 
 /* Functions */
 const fetchAllCharacters = async () => {
+  const cacheKey = "starWarsCharacters";
+  const cacheTimestampKey = "starWarsCharactersTimestamp";
+  const cacheDuration = 1000 * 60 * 60;
   let apiUrl = "https://swapi.dev/api/people";
   let charactersFetched = [];
 
-  while (apiUrl) {
-    const characterBatch = await $fetch(apiUrl);
-    charactersFetched = charactersFetched.concat(characterBatch.results);
-    characterList.value = charactersFetched;
-    console.log(characterList.value);
-    apiUrl = characterBatch.next;
-  }
+  try {
+    const cachedData = localStorage.getItem(cacheKey);
+    const cachedTimestamp = localStorage.getItem(cacheTimestampKey);
+    const currentTime = new Date().getTime();
 
-  firstFetch.value = false;
+    if (cachedData && cachedTimestamp && currentTime - cachedTimestamp < cacheDuration) {
+      console.log("Using cached data");
+      charactersFetched = JSON.parse(cachedData);
+    } else {
+      console.log("Fetching new data");
+      while (apiUrl) {
+        const characterBatch = await $fetch(apiUrl);
+        charactersFetched = [...charactersFetched, ...characterBatch.results];
+        apiUrl = characterBatch.next;
+      }
+      localStorage.setItem(cacheKey, JSON.stringify(charactersFetched));
+      localStorage.setItem(cacheTimestampKey, currentTime.toString());
+    }
+
+    characterList.value = charactersFetched;
+    firstFetch.value = false;
+  } catch (error) {
+    if (error.response) {
+      console.error("HTTP Error:", error.response.status);
+    } else {
+      console.error("Network Error:", error.message);
+    }
+  }
 };
 
-if (firstFetch.value) {
-  fetchAllCharacters();
-}
+onMounted(() => {
+  if (firstFetch.value) {
+    fetchAllCharacters();
+  }
+});
+
+const handleSearch = () => {
+  if (searchQuery.value.length >= 2) {
+    isSearching.value = true;
+  } else {
+    isSearching.value = false;
+  }
+};
 
 const filterSort = (value) => {
   selectedSort.value = value;
@@ -100,19 +132,71 @@ const filterHeight = (value) => {
   selectedHeight.value = value;
   console.log("Height filter applied:", value);
 };
+
+const resetFilters = () => {
+  resetEventBus.emit("reset");
+  searchQuery.value = "";
+  isSearching.value = false;
+  selectedSort.value = "alphabetical";
+  selectedGender.value = "all";
+  selectedBorn.value = "all";
+  selectedHeight.value = "all";
+  console.log("All filters reset");
+};
+
+onMounted(() => {
+  resetFilters();
+});
 </script>
 
 <style scoped>
 .home-wrapper {
   background-color: var(--light-gray);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  min-height: 100dvh;
 }
 
 .dropdown-wrapper {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
   padding: 1rem;
-  padding-top: calc(100px + 1rem);
+  padding-top: calc(75px + 1rem);
+  flex-wrap: wrap;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--dark-gray);
+  border-radius: 5px;
+  font-size: 1rem;
+  text-transform: capitalize;
+  color: var(--dark-gray);
+
+  &:focus {
+    outline: none;
+    border-color: var(--rebel-blue);
+  }
+}
+
+.reset-button {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--imperial-gray);
+  color: var(--bg-col);
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reset-button:hover {
+  background-color: var(--rebel-blue);
 }
 
 .character-grid {
@@ -120,9 +204,29 @@ const filterHeight = (value) => {
   grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
   grid-auto-rows: min-content;
   padding: 1rem;
-  padding-top: calc(100px + 1rem);
   gap: 1rem;
   overflow: scroll;
-  width: 100dvw;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .home-wrapper {
+    flex-direction: row;
+  }
+
+  .dropdown-wrapper {
+    flex-direction: column;
+    padding-top: calc(100px + 1rem);
+  }
+
+  .character-grid {
+    padding-top: calc(100px + 1rem);
+    height: 100dvh;
+  }
+
+  .search-input,
+  .reset-button {
+    width: 100%;
+  }
 }
 </style>

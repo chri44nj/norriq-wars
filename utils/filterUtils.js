@@ -1,5 +1,5 @@
 export function parseBBY(birthYear, sortOrder) {
-  if (birthYear === "unknown") return sortOrder === "age" ? -Infinity : Infinity;
+  if (birthYear === "unknown") return sortOrder === "age" ? Infinity : -Infinity;
   return parseFloat(birthYear);
 }
 
@@ -40,9 +40,9 @@ export function matchHeightRange(height, selectedRange) {
     case "dwarf":
       return numericHeight < 120;
     case "average":
-      return numericHeight >= 120 && numericHeight <= 180;
+      return numericHeight >= 120 && numericHeight <= 199;
     case "nba":
-      return numericHeight > 180;
+      return numericHeight > 199;
     default:
       return false;
   }

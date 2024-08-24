@@ -1,12 +1,12 @@
 <template>
   <div v-if="forceButton.firstClick">
-    <div :class="['welcome-container justify-end left-0 z-20', forceButton.clicked ? 'slide-left' : '']">
-      <p class="welcome-text">Hello</p>
+    <div :class="['welcome-container left-curtain justify-end left-0 z-20', forceButton.clicked ? 'slide-left' : '']">
+      <p class="welcome-text zoom">Hello</p>
     </div>
-    <div :class="['welcome-container justify-start right-0 z-20', forceButton.clicked ? 'slide-right' : '']">
-      <p class="welcome-text">There</p>
+    <div :class="['welcome-container right-curtain justify-start right-0 z-20', forceButton.clicked ? 'slide-right' : '']">
+      <p class="welcome-text zoom">There</p>
     </div>
-    <div :class="['button-wrapper', forceButton.clicked ? 'vanish' : '']">
+    <div :class="['button-wrapper appear', forceButton.clicked ? 'vanish' : '']">
       <button @click="forceButtonClicked" class="force-button">Use the force</button>
     </div>
   </div>
@@ -34,20 +34,48 @@ const forceButtonClicked = () => {
   width: 50%;
   height: 100%;
   background-color: var(--text-col);
-  padding: 1rem;
+  background-color: black;
+}
+
+.left-curtain::before,
+.right-curtain::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/right-curtain.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right center;
+  z-index: -1;
+  animation: fade-in 2.5s ease-in-out forwards;
+}
+
+.left-curtain::before {
+  background-image: url("/left-curtain.webp");
+  background-position: left center;
+}
+
+.right-curtain::before {
+  background-image: url("/right-curtain.webp");
+  background-position: right center;
 }
 
 .welcome-text {
   font-family: "star-jedi";
   color: var(--star-wars-yellow);
-  font-size: 4rem;
+  font-size: clamp(1rem, 10dvh, 2.5rem);
+  padding: 0.5rem;
 }
 
 .button-wrapper {
   position: absolute;
   bottom: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  width: 100%;
   z-index: 30;
   transition: visibility 1s, opacity 1s;
 }
@@ -59,10 +87,19 @@ const forceButtonClicked = () => {
   padding: 0.5rem 1rem;
   border-radius: 10px;
   transition: background-color 0.5s;
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: var(--rebel-blue);
     animation: vibrate 0.5s linear infinite;
   }
+}
+
+.zoom {
+  animation: zoom 2s ease-in-out forwards;
+}
+
+.appear {
+  animation: appear 2.5s ease-in-out forwards;
 }
 
 .vanish {
@@ -78,6 +115,40 @@ const forceButtonClicked = () => {
 }
 
 /* Animations */
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+    transform: rotateX(900deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+}
 
 @keyframes vibrate {
   0% {
@@ -129,6 +200,18 @@ const forceButtonClicked = () => {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+  }
+}
+
+/* Web */
+@media (min-width: 600px) {
+  .welcome-text {
+    padding: 1rem;
+    font-size: clamp(2rem, 15dvh, 4rem);
+  }
+
+  .force-button {
+    font-size: 1.5rem;
   }
 }
 </style>

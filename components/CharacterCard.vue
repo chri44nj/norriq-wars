@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="characterData.name">
+  <NuxtLink :to="`/${slugifiedName}?url=${characterId}`">
     <div class="image-wrapper">
       <NuxtImg :src="characterImage" />
     </div>
@@ -11,20 +11,25 @@
         <p class="details">{{ characterData.gender != "n/a" ? characterData.gender : "robot" }}</p>
       </div>
       <div class="flex-spread">
-        <p class="category">Born</p>
-        <p class="details">{{ characterData.birth_year }}</p>
-      </div>
-      <div class="flex-spread">
         <p class="category">Height</p>
         <p class="details">{{ characterData.height != "unknown" ? characterData.height + "cm" : characterData.height }}</p>
+      </div>
+      <div class="flex-spread">
+        <p class="category">Born</p>
+        <p class="details">{{ characterData.birth_year }}</p>
       </div>
     </div>
   </NuxtLink>
 </template>
 
 <script setup>
+/* Imports */
+import { slugify } from "/utils/slugify";
+
 /* Constants */
 const { characterData } = defineProps(["characterData"]);
+const slugifiedName = slugify(characterData.name);
+const characterId = characterData.url.match(/\/people\/(\d+)\/$/)[1];
 let characterImage = "/male-character.webp";
 
 if (characterData.name != "Yoda") {
@@ -53,26 +58,34 @@ a {
   background-color: var(--bg-col);
   border-radius: 10px;
   transition: 0.3s;
+  overflow: hidden;
   /*   box-shadow: 1px 1px 5px var(--dark-gray); */
 
   & * {
     color: var(--text-col);
   }
-
-  &:hover {
+  &:focus {
+    outline: none;
+  }
+  &:hover,
+  &:focus {
     background-color: var(--rebel-blue);
+    box-shadow: 0 0 15px var(--rebel-blue);
   }
 
-  &:hover img {
+  &:hover img,
+  &:focus img {
     opacity: 0.9;
     transform: scale(1.2);
   }
 
-  &:hover .details {
+  &:hover .details,
+  &:focus .details {
     color: var(--bg-col);
   }
 
-  &:hover h2 {
+  &:hover h2,
+  &:focus h2 {
     color: var(--bg-col);
   }
 }
