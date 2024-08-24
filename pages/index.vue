@@ -214,10 +214,6 @@ onMounted(() => {
   text-align: center;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-
-  &:hover {
-    background-color: var(--rebel-blue);
-  }
 }
 
 .character-grid {
@@ -248,6 +244,12 @@ onMounted(() => {
   .search-input,
   .reset-button {
     width: 100%;
+  }
+
+  .reset-button {
+    &:hover {
+      background-color: var(--rebel-blue);
+    }
   }
 }
 </style>

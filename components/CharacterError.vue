@@ -49,10 +49,6 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-align: center;
-
-  &:hover {
-    background-color: var(--rebel-blue);
-  }
 }
 
 @media (min-width: 600px) {
@@ -62,6 +58,9 @@
 
   .back-button {
     max-width: 20%;
+    &:hover {
+      background-color: var(--rebel-blue);
+    }
   }
 }
 </style>

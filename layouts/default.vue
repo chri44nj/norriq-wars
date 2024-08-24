@@ -37,19 +37,10 @@ a {
   border-bottom: solid 5px transparent;
   transition: 0.2s ease-out;
   color: var(--bg-col);
-
-  &:hover {
-    color: var(--star-wars-yellow);
-    outline: none;
-  }
 }
 
 .router-link-exact-active {
   border-bottom-color: var(--bg-col);
-
-  &:hover {
-    border-bottom-color: var(--star-wars-yellow);
-  }
 }
 
 footer {
@@ -85,6 +76,19 @@ p {
   nav {
     gap: 2rem;
     height: 100px;
+  }
+
+  a {
+    &:hover {
+      color: var(--star-wars-yellow);
+      outline: none;
+    }
+  }
+
+  .router-link-exact-active {
+    &:hover {
+      border-bottom-color: var(--star-wars-yellow);
+    }
   }
 
   h2 {

@@ -111,10 +111,6 @@ section {
   gap: 0.5rem;
   margin-bottom: 1rem;
 
-  & a:hover {
-    color: var(--rebel-blue);
-  }
-
   & :last-child {
     color: var(--rebel-blue);
   }
@@ -160,10 +156,6 @@ section {
 
   & a {
     background-color: var(--imperial-gray);
-    &:hover {
-      color: var(--text-col);
-      background-color: var(--star-wars-yellow);
-    }
   }
 }
 
@@ -195,10 +187,6 @@ img {
   top: 50%;
   opacity: 0.5;
   transition: 0.3s;
-
-  &:hover {
-    opacity: 1;
-  }
 }
 
 .previous {
@@ -228,6 +216,19 @@ img {
   .breadcrumbs {
     margin-left: 1rem;
     margin-bottom: 0;
+
+    & a:hover {
+      color: var(--rebel-blue);
+    }
+  }
+
+  .traits {
+    & a {
+      &:hover {
+        color: var(--text-col);
+        background-color: var(--star-wars-yellow);
+      }
+    }
   }
 
   .character-container {
@@ -248,6 +249,12 @@ img {
 
   .birth-year {
     margin-top: -0.5rem;
+  }
+
+  .navigate-button {
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 </style>

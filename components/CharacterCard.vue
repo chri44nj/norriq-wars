@@ -63,30 +63,6 @@ a {
   & * {
     color: var(--text-col);
   }
-  &:focus {
-    outline: none;
-  }
-  &:hover,
-  &:focus {
-    background-color: var(--rebel-blue);
-    box-shadow: 0 0 15px var(--rebel-blue);
-  }
-
-  &:hover img,
-  &:focus img {
-    opacity: 0.9;
-    transform: scale(1.2);
-  }
-
-  &:hover .details,
-  &:focus .details {
-    color: var(--bg-col);
-  }
-
-  &:hover h2,
-  &:focus h2 {
-    color: var(--bg-col);
-  }
 }
 
 .image-wrapper {
@@ -119,5 +95,34 @@ h2 {
 .category {
   color: var(--light-gray);
   transition: 0.3s;
+}
+
+@media (min-width: 600px) {
+  a {
+    &:focus {
+      outline: none;
+    }
+    &:hover,
+    &:focus {
+      background-color: var(--rebel-blue);
+      box-shadow: 0 0 15px var(--rebel-blue);
+    }
+
+    &:hover img,
+    &:focus img {
+      opacity: 0.9;
+      transform: scale(1.2);
+    }
+
+    &:hover .details,
+    &:focus .details {
+      color: var(--bg-col);
+    }
+
+    &:hover h2,
+    &:focus h2 {
+      color: var(--bg-col);
+    }
+  }
 }
 </style>

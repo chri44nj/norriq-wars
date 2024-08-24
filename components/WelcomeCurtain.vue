@@ -75,7 +75,7 @@ const forceButtonClicked = () => {
 
 .button-wrapper {
   position: fixed;
-  bottom: 40%;
+  bottom: 10%;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -91,10 +91,6 @@ const forceButtonClicked = () => {
   border-radius: 10px;
   transition: background-color 0.5s;
   animation: tempt 2s ease-in-out infinite;
-  &:hover {
-    background-color: var(--rebel-blue);
-    animation: vibrate 0.5s linear infinite;
-  }
 }
 
 .zoom {
@@ -241,6 +237,10 @@ const forceButtonClicked = () => {
 
   .force-button {
     font-size: 1.5rem;
+    &:hover {
+      background-color: var(--rebel-blue);
+      animation: vibrate 0.5s linear infinite;
+    }
   }
 }
 </style>
