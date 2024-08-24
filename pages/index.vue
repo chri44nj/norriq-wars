@@ -7,7 +7,10 @@
       <Dropdown :dropdownData="genderDropdownData" @change="filterGender" />
       <Dropdown :dropdownData="heightDropdownData" @change="filterHeight" />
       <Dropdown :dropdownData="bornDropdownData" @change="filterBorn" />
-      <button @click="resetFilters" class="reset-button">Reset Filters</button>
+      <div class="flex justify-center items-center flex-col w-full">
+        <button @click="resetFilters" class="reset-button">Reset Filters</button>
+        <p>Showing {{ allFilteredCharacters.length }} of {{ characterList.length }}</p>
+      </div>
     </div>
     <section class="character-grid">
       <CharacterCard v-for="character in filteredCharacterList" :key="character.url" :characterData="character" />
@@ -16,6 +19,12 @@
 </template>
 
 <script setup>
+/* Metadata */
+useHead({
+  title: "Characters",
+  meta: [{ name: "description", content: "Search through (not even clsoe to) all of your favorite characters from the Star Wars universe." }],
+});
+
 /* Imports */
 import { sortDropdownData, genderDropdownData, bornDropdownData, heightDropdownData } from "/constants/dropdownData";
 import { selectedSort, selectedGender, selectedBorn, selectedHeight } from "/constants/filterData";
@@ -60,6 +69,8 @@ const filteredCharacterList = computed(() => {
 
   return filteredList;
 });
+
+const allFilteredCharacters = filteredCharacterList;
 
 /* Functions */
 const fetchAllCharacters = async () => {
@@ -184,7 +195,6 @@ onMounted(() => {
 
 .reset-button {
   width: 100%;
-  margin-top: 1rem;
   padding: 0.5rem 1rem;
   background-color: var(--imperial-gray);
   color: var(--bg-col);
@@ -194,6 +204,8 @@ onMounted(() => {
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 
   &:hover {
     background-color: var(--rebel-blue);

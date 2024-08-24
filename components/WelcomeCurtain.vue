@@ -90,6 +90,7 @@ const forceButtonClicked = () => {
   padding: 0.5rem 1rem;
   border-radius: 10px;
   transition: background-color 0.5s;
+  animation: tempt 2s ease-in-out infinite;
   &:hover {
     background-color: var(--rebel-blue);
     animation: vibrate 0.5s linear infinite;
@@ -123,7 +124,7 @@ const forceButtonClicked = () => {
     opacity: 0;
   }
   100% {
-    opacity: 0.8;
+    opacity: 1;
   }
 }
 
@@ -172,6 +173,28 @@ const forceButtonClicked = () => {
   100% {
     transform: translateX(0);
     transform: rotate(1deg);
+  }
+}
+
+@keyframes tempt {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  25% {
+    transform: rotateX(15deg);
+  }
+
+  50% {
+    transform: rotateX(0deg);
+  }
+
+  75% {
+    transform: rotateX(-15deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
   }
 }
 

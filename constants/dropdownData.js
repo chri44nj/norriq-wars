@@ -48,6 +48,6 @@ export const heightDropdownData = {
     { value: "all", text: "All heights" },
     { value: "dwarf", text: "Dwarf" },
     { value: "average", text: "Average" },
-    { value: "nba", text: "NBA-player" },
+    { value: "giant", text: "Giant" },
   ],
 };

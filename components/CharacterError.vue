@@ -1,6 +1,6 @@
 <template>
   <div class="error-container">
-    <p class="error-text">The character you're looking for has gone missing.</p>
+    <p class="error-text">The character you're looking for has gone missing</p>
     <NuxtLink class="back-button" to="/">Help us find them!</NuxtLink>
   </div>
 </template>

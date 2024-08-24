@@ -95,7 +95,7 @@ a {
 
 img {
   border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+
   object-fit: cover;
   transition: 0.3s ease-in-out;
 }

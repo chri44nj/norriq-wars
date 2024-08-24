@@ -41,7 +41,7 @@ export function matchHeightRange(height, selectedRange) {
       return numericHeight < 120;
     case "average":
       return numericHeight >= 120 && numericHeight <= 199;
-    case "nba":
+    case "giant":
       return numericHeight > 199;
     default:
       return false;
