@@ -84,6 +84,7 @@ const forceButtonClicked = () => {
 }
 
 .force-button {
+  font-size: 1.5rem;
   color: var(--bg-col);
   font-weight: bold;
   background-color: var(--imperial-gray);
@@ -236,7 +237,6 @@ const forceButtonClicked = () => {
   }
 
   .force-button {
-    font-size: 1.5rem;
     &:hover {
       background-color: var(--rebel-blue);
       animation: vibrate 0.5s linear infinite;
