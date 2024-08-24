@@ -32,7 +32,7 @@ const forceButtonClicked = () => {
   display: flex;
   align-items: center;
   width: 50%;
-  height: 100dvh;
+  height: 100vh;
   background-color: var(--text-col);
   background-color: black;
 }
