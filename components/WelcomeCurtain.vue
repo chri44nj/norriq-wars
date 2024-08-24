@@ -28,11 +28,11 @@ const forceButtonClicked = () => {
 
 <style scoped>
 .welcome-container {
-  position: absolute;
+  position: fixed;
   display: flex;
   align-items: center;
   width: 50%;
-  height: 100%;
+  height: 100dvh;
   background-color: var(--text-col);
   background-color: black;
 }
@@ -50,7 +50,7 @@ const forceButtonClicked = () => {
   background-repeat: no-repeat;
   background-position: right center;
   z-index: -1;
-  animation: fade-in 2.5s ease-in-out forwards;
+  animation: fade-in 2s ease-in-out forwards;
 }
 
 .left-curtain::before {
@@ -71,7 +71,7 @@ const forceButtonClicked = () => {
 }
 
 .button-wrapper {
-  position: absolute;
+  position: fixed;
   bottom: 30%;
   display: flex;
   justify-content: center;
@@ -87,8 +87,7 @@ const forceButtonClicked = () => {
   padding: 0.5rem 1rem;
   border-radius: 10px;
   transition: background-color 0.5s;
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: var(--rebel-blue);
     animation: vibrate 0.5s linear infinite;
   }
