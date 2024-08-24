@@ -29,7 +29,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/crying-yoda.jpg");
+  background-image: url("/crying-yoda.webp");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

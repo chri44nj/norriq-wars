@@ -3,11 +3,11 @@
     <div class="breadcrumbs">
       <NuxtLink class="font-bold" to="/">Characters</NuxtLink>
       <span>/</span>
-      <p class="font-bold">{{ character.name }}</p>
+      <p class="font-bold">{{ character ? character.name : "Missing Character" }}</p>
     </div>
     <div class="character-container" v-if="character">
       <div class="portrait">
-        <NuxtImg src="/portrait.png" />
+        <NuxtImg :src="`/portrait${characterId}.png`" />
         <button class="navigate-button previous" @click="previousCharacter">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#f9f9f9" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
             <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
@@ -23,7 +23,7 @@
         <div>
           <h1>{{ character.name }}</h1>
         </div>
-        <p class="lorem">Wookiee ipsum dolor, sit amet consectetur Jedi elit. Culpa Sith similique facilis droid officia. Iste Force perspicacious, lightsaber iusto vel, Tatooine doloribus itaque Jedi nesciunt nobis Hutt alias expedita reiciendis quisquam accusamus Yoda illum Ewok voluptatum incidunt consequuntur, sint commodi culpa sed Sith! Autem accusamus droid adipisci assumenda holo-delectus soluta Coruscant?</p>
+        <p class="lorem">Wookiee ipsum dolor, sit amet consectetur Jedi elit. Culpa Sith similique facilis droid officia. Iste Force perspicacious, lightsaber iusto vel, Tatooine doloribus itaque Jedi nesciunt nobis Hutt alias expedita reiciendis quisquam accusamus Yoda illum Ewok voluptatum incidunt consequuntur, sint commodi culpa sed Sith!</p>
         <div class="traits">
           <p>{{ character.gender != "n/a" ? character.gender : "Robot" }}</p>
           <p>{{ character.height != "unknown" ? character.height + "cm" : "Unknown Height" }}</p>
@@ -162,6 +162,7 @@ h1 {
   font-size: clamp(2rem, 5dvw, 3rem);
   font-family: "star jedi";
   color: var(--bg-col);
+  text-transform: lowercase;
 }
 
 .birth-year {
@@ -171,6 +172,9 @@ h1 {
 }
 
 img {
+  width: 80%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
   filter: drop-shadow(5px 5px 25px black);
 }
 

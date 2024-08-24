@@ -13,26 +13,18 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import resetEventBus from "/utils/resetEventBus";
 
-// Props and Emits
 const { dropdownData } = defineProps(["dropdownData"]);
 const emit = defineEmits(["change"]);
-
-// Data
 const defaultOption = dropdownData.options[0].value;
 const selectedValue = ref(defaultOption);
-
-// Functions
 const dropdownChanged = (event) => {
   selectedValue.value = event.target.value;
   emit("change", selectedValue.value);
 };
-
-// Event Handling
 const resetHandler = () => {
   selectedValue.value = defaultOption;
 };
 
-// Register and unregister event bus listeners
 onMounted(() => {
   resetEventBus.on("reset", resetHandler);
 });

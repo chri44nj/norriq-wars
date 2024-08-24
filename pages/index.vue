@@ -38,11 +38,19 @@ const searchQuery = ref("");
 const isSearching = ref(false);
 
 const filteredCharacterList = computed(() => {
+  const normalizeString = (str) => {
+    return str.toLowerCase().replace(/[-\s]/g, "");
+  };
+
   let filteredList = characterList.value.filter((character) => {
+    const normalizedCharacterName = normalizeString(character.name);
+    const normalizedSearchQuery = normalizeString(searchQuery.value);
+
     const genderMatch = selectedGender.value === "all" || character.gender === selectedGender.value;
     const bornMatch = selectedBorn.value === "all" || matchBornRange(character.birth_year, selectedBorn.value);
     const heightMatch = selectedHeight.value === "all" || matchHeightRange(character.height, selectedHeight.value);
-    const searchMatch = !isSearching.value || character.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+    const searchMatch = !isSearching.value || normalizedCharacterName.includes(normalizedSearchQuery);
+
     return genderMatch && bornMatch && heightMatch && searchMatch;
   });
 
