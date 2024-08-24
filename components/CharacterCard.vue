@@ -1,7 +1,7 @@
 <template>
   <NuxtLink :to="`/${slugifiedName}?url=${characterId}`">
     <div class="image-wrapper">
-      <NuxtImg :src="characterImage" />
+      <NuxtImg :src="characterImage" alt="Character grid image" />
     </div>
     <div class="p-4">
       <h2>{{ characterData.name }}</h2>
