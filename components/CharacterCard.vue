@@ -59,7 +59,6 @@ a {
   border-radius: 10px;
   transition: 0.3s;
   overflow: hidden;
-  /*   box-shadow: 1px 1px 5px var(--dark-gray); */
 
   & * {
     color: var(--text-col);

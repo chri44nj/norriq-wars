@@ -20,6 +20,11 @@ const forceButton = useState("forceButton", () => ({ clicked: false, firstClick:
 const forceButtonClicked = () => {
   forceButton.value.clicked = true;
 
+  const homeWrapper = document.getElementById("home-wrapper");
+  if (homeWrapper) {
+    homeWrapper.scrollIntoView({ behavior: "smooth" });
+  }
+
   setTimeout(() => {
     forceButton.value.firstClick = false;
   }, 2000);
@@ -45,10 +50,8 @@ const forceButtonClicked = () => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/right-curtain.webp");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: right center;
   z-index: -1;
   animation: fade-in 2s ease-in-out forwards;
 }
@@ -66,13 +69,13 @@ const forceButtonClicked = () => {
 .welcome-text {
   font-family: "star-jedi";
   color: var(--star-wars-yellow);
-  font-size: clamp(1rem, 10dvh, 2.5rem);
+  font-size: clamp(1rem, 10dvw, 2.5rem);
   padding: 0.5rem;
 }
 
 .button-wrapper {
   position: fixed;
-  bottom: 30%;
+  bottom: 40%;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -206,7 +209,11 @@ const forceButtonClicked = () => {
 @media (min-width: 600px) {
   .welcome-text {
     padding: 1rem;
-    font-size: clamp(2rem, 15dvh, 4rem);
+    font-size: clamp(2rem, 15dvw, 4rem);
+  }
+
+  .button-wrapper {
+    bottom: 30%;
   }
 
   .force-button {

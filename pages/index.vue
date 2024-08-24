@@ -1,5 +1,5 @@
 <template>
-  <div class="home-wrapper">
+  <div id="home-wrapper" class="home-wrapper">
     <WelcomeCurtain />
     <div class="dropdown-wrapper">
       <input v-model="searchQuery" @input="handleSearch" placeholder="Search characters..." class="search-input" />
@@ -193,10 +193,11 @@ onMounted(() => {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
+  text-align: center;
 
-.reset-button:hover {
-  background-color: var(--rebel-blue);
+  &:hover {
+    background-color: var(--rebel-blue);
+  }
 }
 
 .character-grid {

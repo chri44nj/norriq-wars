@@ -12,7 +12,7 @@
     <footer>
       <h2>May the force be with you</h2>
       <p>Data source</p>
-      <a class="source-link" ref="https://swapi.dev/api/people" target="_blank">swapi</a>
+      <a class="source-link" href="https://swapi.dev/api/people" target="_blank">swapi</a>
     </footer>
   </div>
 </template>
@@ -62,7 +62,7 @@ footer {
 }
 
 h2 {
-  font-size: clamp(1rem, 5dvh, 3rem);
+  font-size: clamp(1rem, 5dvw, 3rem);
   color: var(--star-wars-yellow);
   font-family: "star-jedi";
   text-align: center;
@@ -88,7 +88,7 @@ p {
   }
 
   h2 {
-    font-size: clamp(1rem, 10dvh, 3.5rem);
+    font-size: clamp(1rem, 10dvw, 3.5rem);
   }
 }
 </style>
