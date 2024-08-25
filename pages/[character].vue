@@ -23,7 +23,7 @@
         <div>
           <h1>{{ character.name }}</h1>
         </div>
-        <p class="lorem">Wookiee ipsum dolor, sit amet consectetur Jedi elit. Culpa Sith similique facilis droid officia. Iste Force perspicacious, lightsaber iusto vel, Tatooine doloribus itaque Jedi nesciunt nobis Hutt alias expedita reiciendis quisquam accusamus Yoda illum Ewok voluptatum incidunt consequuntur, sint commodi culpa sed Sith!</p>
+        <p class="lorem">Wookie ipsum dolor, sit amet consectetur Jedi elit. Culpa Sith similique facilis droid officia. Iste Force perspicacious, lightsaber iusto vel, Tatooine doloribus itaque Jedi nesciunt nobis Hutt alias expedita reiciendis quisquam accusamus Yoda illum Ewok voluptatum incidunt consequuntur, sint commodi culpa sed Sith!</p>
         <div class="traits">
           <p>{{ character.gender != "n/a" ? character.gender : "Robot" }}</p>
           <p>{{ character.height != "unknown" ? character.height + "cm" : "Unknown Height" }}</p>
