@@ -237,9 +237,11 @@ const forceButtonClicked = () => {
   }
 
   .force-button {
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: var(--rebel-blue);
       animation: vibrate 0.5s linear infinite;
+      outline: none;
     }
   }
 }

@@ -93,8 +93,12 @@ h2 {
 }
 
 .category {
-  color: var(--light-gray);
+  color: var(--text-col);
   transition: 0.3s;
+}
+
+.details {
+  font-weight: bold;
 }
 
 @media (min-width: 600px) {

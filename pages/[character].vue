@@ -7,7 +7,7 @@
     </div>
     <div class="character-container" v-if="character">
       <div class="portrait">
-        <NuxtImg preload src="portrait1.png" alt="Character portrait" />
+        <NuxtImg preload @load="imgLoaded" src="portrait1.png" alt="Character portrait" />
         <button class="navigate-button previous" @click="previousCharacter">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#f9f9f9" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
             <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
@@ -58,7 +58,10 @@ const characterList = useState("characterList");
 const route = useRoute();
 const router = useRouter();
 const characterId = computed(() => route.query.url);
-const validCharacterImg = [1, 2, 3, 4, 5, 10, 11, 13, 14, 20, 21, 22, 44, 67];
+/* const validCharacterImg = [1, 2, 3, 4, 5, 10, 11, 13, 14, 20, 21, 22, 44, 67]; */
+const imgLoaded = () => {
+  console.log("Image loaded!");
+};
 
 /* Functions */
 const character = computed(() => {
@@ -69,7 +72,6 @@ const character = computed(() => {
 });
 
 /* 
--- For another time --
 const getImageSrc = computed(() => {
   if (validCharacterImg.includes(parseInt(characterId.value))) {
     return `/portrait${characterId.value}.png`;
