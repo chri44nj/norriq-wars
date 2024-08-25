@@ -177,7 +177,7 @@ h1 {
 }
 
 img {
-  width: 80%;
+  width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
   filter: drop-shadow(5px 5px 25px black);
@@ -244,6 +244,10 @@ img {
   .portrait {
     border-top-right-radius: 0;
     border-bottom-left-radius: 10px;
+  }
+
+  img {
+    width: 80%;
   }
 
   .details {
