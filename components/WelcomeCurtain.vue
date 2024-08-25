@@ -53,7 +53,7 @@ const forceButtonClicked = () => {
   background-size: cover;
   background-repeat: no-repeat;
   z-index: -1;
-  animation: fade-in 2s ease-in-out forwards;
+  animation: fade-in 5s ease-in-out forwards;
 }
 
 .left-curtain::before {
