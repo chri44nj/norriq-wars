@@ -1,7 +1,8 @@
 <template>
   <div class="error-container">
+    <h2>Blasted!</h2>
     <p class="error-text">The character you're looking for has gone missing</p>
-    <NuxtLink class="back-button" to="/">Help us find them!</NuxtLink>
+    <NuxtLink class="back-button" to="/">Help us find them</NuxtLink>
   </div>
 </template>
 
@@ -14,6 +15,12 @@
   justify-content: center;
   align-items: center;
   height: calc(100dvh - 75px - 1rem);
+
+  & h2 {
+    color: var(--dark-side-red);
+    font-family: "star-jedi";
+    font-size: clamp(1.25rem, 3dvw, 3rem);
+  }
 }
 
 .error-text {

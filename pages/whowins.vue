@@ -1,6 +1,6 @@
 <template>
   <section>
-    <NuxtImg src="/yoda-background.webp" alt="Yoda sassy background" />
+    <NuxtImg preload src="/yoda-background.webp" alt="Yoda sassy background" />
     <h1>Wouldn't you like to know?</h1>
     <p>(A.K.A. under construction)</p>
   </section>

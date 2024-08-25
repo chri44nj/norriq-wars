@@ -12,8 +12,12 @@
         <p>Showing {{ allFilteredCharacters.length }} of {{ characterList.length }}</p>
       </div>
     </div>
-    <section class="character-grid">
+    <section v-if="filteredCharacterList.length != 0" class="character-grid">
       <CharacterCard v-for="character in filteredCharacterList" :key="character.url" :characterData="character" />
+    </section>
+    <section class="no-characters" v-else>
+      <h2>No characters found</h2>
+      <p>Try again, using different search criterias!</p>
     </section>
   </div>
 </template>
@@ -226,6 +230,20 @@ onMounted(() => {
   width: 100%;
 }
 
+.no-characters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  & h2 {
+    color: var(--dark-side-red);
+    font-family: "star-jedi";
+    font-size: clamp(1rem, 3dvh, 1.5rem);
+  }
+}
+
 @media (min-width: 600px) {
   .home-wrapper {
     flex-direction: row;
@@ -249,6 +267,14 @@ onMounted(() => {
   .reset-button {
     &:hover {
       background-color: var(--rebel-blue);
+    }
+  }
+
+  .no-characters {
+    margin: auto;
+
+    & h2 {
+      font-size: clamp(2rem, 5dvh, 3rem);
     }
   }
 }
