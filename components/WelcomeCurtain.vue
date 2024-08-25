@@ -91,7 +91,7 @@ const forceButtonClicked = () => {
   padding: 0.5rem 1rem;
   border-radius: 10px;
   transition: background-color 0.5s;
-  animation: tempt 2s ease-in-out infinite;
+  animation: tempt 1s ease-in-out infinite;
 }
 
 .zoom {
@@ -178,16 +178,8 @@ const forceButtonClicked = () => {
     transform: rotateX(0deg);
   }
 
-  25% {
-    transform: rotateX(15deg);
-  }
-
   50% {
-    transform: rotateX(0deg);
-  }
-
-  75% {
-    transform: rotateX(-15deg);
+    transform: rotateX(25deg);
   }
 
   100% {

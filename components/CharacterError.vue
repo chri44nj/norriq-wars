@@ -49,6 +49,22 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-align: center;
+  animation: tempt 1s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes tempt {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  50% {
+    transform: rotateX(25deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
 }
 
 @media (min-width: 600px) {

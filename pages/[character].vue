@@ -40,6 +40,8 @@
       </div>
     </div>
     <CharacterError v-else />
+
+    <div v-if="character" class="flex justify-center"><button class="random-button" @click="randomCharacter">Random Character</button></div>
   </section>
 </template>
 
@@ -98,6 +100,15 @@ const nextCharacter = () => {
   const idNumber = parseInt(characterId.value);
   const nextId = idNumber + 1;
   navigateToCharacter(nextId);
+};
+
+const randomCharacter = () => {
+  const randomId = Math.floor(Math.random() * characterList.value.length);
+  const newCharacter = characterList.value.find((c) => c.url.endsWith(`/${randomId}/`));
+  if (newCharacter) {
+    const slug = slugify(newCharacter.name);
+    router.push({ path: `/${slug}`, query: { url: randomId.toString() } });
+  }
 };
 </script>
 
@@ -212,6 +223,34 @@ img {
   position: relative;
 }
 
+.random-button {
+  width: 100%;
+  font-size: 1.5rem;
+  color: var(--bg-col);
+  font-weight: bold;
+  background-color: var(--imperial-gray);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  transition: background-color 0.5s;
+  animation: tempt 1s ease-in-out infinite;
+  margin-top: 1rem;
+}
+
+/* Animations */
+@keyframes tempt {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  50% {
+    transform: rotateX(25deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
 @media (min-width: 600px) {
   section {
     padding-top: calc(100px + 1rem);
@@ -262,6 +301,17 @@ img {
   .navigate-button {
     &:hover {
       opacity: 1;
+    }
+  }
+
+  .random-button {
+    width: auto;
+    margin-top: 0;
+    &:hover,
+    &:focus {
+      background-color: var(--rebel-blue);
+      animation: vibrate 0.5s linear infinite;
+      outline: none;
     }
   }
 }
