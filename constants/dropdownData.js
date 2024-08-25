@@ -5,10 +5,10 @@ export const sortDropdownData = {
   options: [
     { value: "alphabetical", text: "A-Z" },
     { value: "reverse-alphabetical", text: "Z-A" },
-    { value: "age", text: "Young-Old" },
-    { value: "reverse-age", text: "Old-Young" },
     { value: "height", text: "Short-Tall" },
     { value: "reverse-height", text: "Tall-Short" },
+    { value: "age", text: "Young-Old" },
+    { value: "reverse-age", text: "Old-Young" },
   ],
 };
 

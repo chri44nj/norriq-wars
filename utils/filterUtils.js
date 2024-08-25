@@ -38,9 +38,9 @@ export function matchHeightRange(height, selectedRange) {
 
   switch (selectedRange) {
     case "dwarf":
-      return numericHeight < 120;
+      return numericHeight < 147;
     case "average":
-      return numericHeight >= 120 && numericHeight <= 199;
+      return numericHeight >= 147 && numericHeight <= 199;
     case "giant":
       return numericHeight > 199;
     default:
