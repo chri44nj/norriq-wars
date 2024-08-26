@@ -176,7 +176,7 @@ section {
 
 h1 {
   font-size: clamp(2rem, 5dvw, 3rem);
-  font-family: "star jedi";
+  font-family: "star-jedi";
   color: var(--bg-col);
   text-transform: lowercase;
 }
