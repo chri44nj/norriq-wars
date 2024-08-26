@@ -118,6 +118,8 @@ h2 {
       transform: scale(1.2);
     }
 
+    &:hover .category,
+    &:focus .category,
     &:hover .details,
     &:focus .details {
       color: var(--bg-col);
